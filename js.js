@@ -1,23 +1,31 @@
-/*jshint strict:false */
+/*
 
-// ensure you are forced to write correct JavaScript code-
-'use strict';
+jshint strict:false
+
+*/
 
 // set all variables in global scope to give code overview
-var map, icon, infoWindow, setUL
+var map, icon, infoWindow, setUL;
 var finalURL, marker, markertitle;
 var coordinates, viewModel, title;
 var position, id, i, filter, coordinatestr, locStr;
-var rating, formattedAddress, locationImage, formattedPhone;
-var $infoAddress, $infoPhone, $infoImg;
+var rating, formattedAddress, locationImage, formattedPhone, formattedTips;
+var $infoAddress, $infoPhone, $infoImg, $infoTips;
 var $infoRating, $menu, $hide;
+var tipsURL;
+var ko, google;
+var $;
 var url = 'https://api.foursquare.com/v2/venues/';
 var auth = '?client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
+var tipsAuth = 'client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
 var markers = [];
 var clear = null;
 
 // set Location behavior
 function Location(title, lat, lng, filter, id, cat) {
+
+	'use strict';  // ensures correct, strict-style JavaScript code
+
 	this.title = title;
 	this.lat = lat;
 	this.lng = lng;
@@ -39,6 +47,8 @@ function Location(title, lat, lng, filter, id, cat) {
 }
 
 function ViewModel(){
+
+	'use strict';
 
 	var self = this;
 
@@ -177,6 +187,9 @@ function ViewModel(){
 
 		finalURL = url + marker.id + auth;
 
+		// TODO: consider adding tipsURL functionality below
+		tipsURL = url + marker.id + '/tips?sort=recent&' + tipsAuth;
+
 		infoWindow.close();
 		(function() {
 			for (i = 0; i < markers.length; i++) {
@@ -193,12 +206,12 @@ function ViewModel(){
 								'<div><br><span class="window-address"></span></div>' +
 								'<div><br><span class="window-phone"></span></div>' +
 								'<div><br><img class="window-image"></div>' +
+								'<div><br><span class="window-tips"></span></div>' +  // TODO; not functional
 								'<div><br><span class="window-rating"></span></div>' +
 								'</div>'
 							);
 		infoWindow.open(map, marker);
-		$.getJSON(finalURL)  // requests API info
-
+		$.getJSON(finalURL)  // requests API info for everything besides tips
 		.done(function(data) {
 			rating = data.response.venue.rating;
 			formattedAddress = data.response.venue.location.formattedAddress;
@@ -211,8 +224,7 @@ function ViewModel(){
 
 			// set API data into infoWindow with light error handling
 			if (formattedAddress.length > 0) {
-				$infoAddress.append(data.response.venue.location.formattedAddress[0]);
-				$infoAddress.append("<br>Astoria, NY");
+				$infoAddress.append(data.response.venue.location.formattedAddress[0] + "<br>Astoria, NY");
 			} else {
 				$infoAddress.append("Sorry, no address!");
 			}
@@ -244,6 +256,21 @@ function ViewModel(){
 
 			} else {
 				$infoRating.append("Be the first to review this venue!");
+			}
+		});
+
+		// TODO; not functional
+
+		$.getJSON(tipsURL)
+		.done(function(data) {
+			formattedTips = data.response.tips.items.text;
+			$infoTips = $(".window-tips");
+
+			if (formattedTips.length > 0) {
+				$infoTips.append(data.response.tips.items.text[0]);
+
+			} else {
+				$infoTips.append("Sorry, no tips available!");
 			}
 		});
 	};
