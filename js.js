@@ -5,13 +5,12 @@ jshint strict:false
 */
 
 // set all variables in global scope to give code overview
+// jQuery vars defined in functions
 var map, icon, infoWindow, setUL;
 var finalURL, marker, markertitle;
 var coordinates, viewModel, title;
 var position, id, i, filter, coordinatestr, locStr;
 var rating, formattedAddress, locationImage, formattedPhone, formattedTips;
-var $infoAddress, $infoPhone, $infoImg, $infoTips;
-var $infoRating, $menu, $hide;
 var tipsURL;
 var ko, google;
 var $;
@@ -169,8 +168,8 @@ function ViewModel(){
 
 	// set menu tab's hiding behavior
 	self.hide = function() {
-		$menu = $(".menu");
-		$hide = $(".menu-tab");
+		var $menu = $(".menu");
+		var $hide = $(".menu-tab");
 		if ($menu.hasClass("hide")) {
 			$menu.removeClass("hide").css("box-shadow", "3px 3px 10px 0px rgba(0,0,0,0.5)");
 			$hide.css({ "top": "10px"
@@ -217,10 +216,10 @@ function ViewModel(){
 			formattedAddress = data.response.venue.location.formattedAddress;
 			locationImage = data.response.venue.bestPhoto;
 			formattedPhone = data.response.venue.contact.formattedPhone;
-			$infoImg = $(".window-image");
-			$infoRating = $(".window-rating");
-			$infoAddress = $(".window-address");
-			$infoPhone = $(".window-phone");
+			var $infoImg = $(".window-image");
+			var $infoRating = $(".window-rating");
+			var $infoAddress = $(".window-address");
+			var $infoPhone = $(".window-phone");
 
 			// set API data into infoWindow with light error handling
 			if (formattedAddress.length > 0) {
@@ -264,7 +263,7 @@ function ViewModel(){
 		$.getJSON(tipsURL)
 		.done(function(data) {
 			formattedTips = data.response.tips.items.text;
-			$infoTips = $(".window-tips");
+			var $infoTips = $(".window-tips");
 
 			if (formattedTips.length > 0) {
 				$infoTips.append(data.response.tips.items.text[0]);
