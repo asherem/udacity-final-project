@@ -1,0 +1,194 @@
+*, html {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 0.05em;
+	font-family: 'Lato', sans-serif;
+}
+
+h1 {
+	color: white;
+	font-weight: normal;
+	margin: 0;
+	margin-top: -20px;
+	padding: 10px 0;
+	font-size: 2.2em;
+	text-align: center;
+}
+
+h2 {
+	color: white;
+	font-weight: normal;
+	margin: 0;
+	padding: 10px 0;
+	font-size: 1.2em;
+	font-style: italic;
+	text-align: center;
+}
+
+input {
+	width: 100%;
+	padding: 5px 10px;
+	font-size: 0.75em;
+}
+
+#map-view {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;  /* Google prefers explicit setting */
+	width: 100%;
+}
+
+/* Grow effects via Hover.css */
+.hvr-grow {
+    vertical-align: middle;
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    transition-duration: 0.3s;
+    transition-property: transform;
+}
+
+.hvr-grow:hover,
+.hvr-grow:focus,
+.hvr-grow:active {
+    transform: scale(1.1);
+}
+
+/* Fade effects via Hover.css */
+
+.hvr-fade {
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-transform: perspective(1px) translateZ(0);
+	transform: perspective(1px) translateZ(0);
+	box-shadow: 0 0 1px transparent;
+	overflow: hidden;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	-webkit-transition-property: color, background-color;
+	transition-property: color, background-color;
+}
+
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+	background-color: #2098D1;
+	color: white;
+}
+
+.container {
+	display: block;
+	position: relative;
+	height: 100vh;
+	width: 100%;
+}
+
+.menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: inline-block;
+	border-radius: 10px;
+	height: 100vh;
+	width: 320px;
+	margin: 0;
+	padding: 0;
+	background-color: WhiteSmoke;
+	box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.6);
+	transition: left 0.5s;
+	zoom: 0.8;
+	-moz-transform: scale(0.8);
+	z-index: 1;
+}
+
+.menu-search {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 160px;
+	width: 100%;
+	margin: 0;
+	padding: 0 10px;
+	background-color: LightSlateGrey;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	box-shadow: 2px 6px 10px -2px rgba(0, 0, 0, 0.4);
+	z-index: 1;
+}
+
+.menu-list {
+	position: absolute;
+	top: 30px;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	padding-top: 140px;
+}
+
+.menu-location {
+	padding: 5px 0 5px 15px;
+	font-size: 1em;
+	letter-spacing: 0.1em;
+	cursor: pointer;
+}
+
+.menu-tab {
+	position: absolute;
+	display: block;
+	text-align: center;
+	width: 40px;
+	height: 100px;
+	top: 10px;
+	left: 100%;
+	padding: 0 10px;
+	background-color: WhiteSmoke;
+	border: 2px solid LightSlateGrey;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.5);
+	cursor: pointer;
+	transition: top 0.3s;
+}
+
+.hide {
+	left: -320px;
+	transition: left 1s;
+}
+
+.window-title {
+	font-weight: 600;
+	font-size: 1.2em;
+}
+
+.window-address {
+	font-style: italic;
+}
+
+.window-phone {
+	font-style: normal;
+}
+
+.window-tips {
+	font-style: normal;
+}
+
+.window-image {
+	display: block;
+	height: 80px;
+}
+
+.red {
+	color: firebrick;
+}
+
+.yellow {
+	color: goldenrod;
+}
+
+.green {
+	color: forestgreen;
+}
