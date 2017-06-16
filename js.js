@@ -1,8 +1,6 @@
-/*
+/* jshint strict: false */
 
-jshint strict:false
-
-*/
+/* global $: false, jQuery: false */
 
 // set all variables in global scope to give code overview
 // jQuery vars defined in functions
@@ -13,7 +11,6 @@ var position, id, i, filter, coordinatestr, locStr;
 var rating, formattedAddress, locationImage, formattedPhone, formattedTips;
 var tipsURL;
 var ko, google;
-var $;
 var url = 'https://api.foursquare.com/v2/venues/';
 var auth = '?client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
 var tipsAuth = 'client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';

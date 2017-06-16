@@ -98,10 +98,16 @@ input {
 	background-color: WhiteSmoke;
 	box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.6);
 	transition: left 0.5s;
-	zoom: 0.8;
 	-moz-transform: scale(0.8);
 	z-index: 1;
 }
+
+/*
+.zoom {
+	zoom: 80%;
+}
+
+*/
 
 .menu-search {
 	position: absolute;
