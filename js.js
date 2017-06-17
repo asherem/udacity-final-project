@@ -8,28 +8,51 @@ var map, icon, infoWindow, setUL;
 var finalURL, marker, markertitle;
 var coordinates, viewModel, title;
 var position, id, i, filter, coordinatestr, locStr;
-var rating, formattedAddress, locationImage, formattedPhone, formattedTips;
-var tipsURL;
-var ko, google;
+var rating, formattedAddress, locationImage, formattedPhone;
+// TODO var formattedTips;
+// TODO var tipsURL;
+var google, ko;
 var url = 'https://api.foursquare.com/v2/venues/';
 var auth = '?client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
-var tipsAuth = 'client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
+// TODO var tipsAuth = 'client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
 var markers = [];
 var clear = null;
+
+// set map
+function initMap() {
+
+	'use strict'; // ensures correct, strict-style JavaScript code
+
+	map = new google.maps.Map(document.getElementById('map-view'), {
+		center: {lat: 40.760764, lng: -73.922769},
+		zoom: 16
+	});
+
+	infoWindow = new google.maps.InfoWindow({
+		content: ''
+	});
+
+	viewModel.setMarkers();
+}
+
+// error handling
+function mapError() {
+  document.write("Oops, there goes an error! Come back later.");
+}
 
 // set Location behavior
 function Location(title, lat, lng, filter, id, cat) {
 
-	'use strict';  // ensures correct, strict-style JavaScript code
+	'use strict';
 
 	this.title = title;
 	this.lat = lat;
 	this.lng = lng;
 	this.filter = filter;
 	this.id = id;
-	this.cat = cat; // category of location to potentially be used later
+	this.cat = cat; // category of location to potentially be used later */
 
-	// the following SWITCH is a potential TODO with 'this.cat' that has not been implemented:
+	/* the following SWITCH is a potential TODO with 'this.cat' that has not been implemented:
 	switch (this.cat) {
 
 		case "Restaurant":
@@ -39,7 +62,7 @@ function Location(title, lat, lng, filter, id, cat) {
 		case "Other":
 		this.icon = 'http://www.googlemapsmarkers.com/v1/O/0099FF/FFFFFF/FF0000/';
 		break;
-	}
+	} */
 }
 
 function ViewModel(){
@@ -85,7 +108,7 @@ function ViewModel(){
 		});
 
 		marker.addListener('click', function(){
-			self.showInfoWindow(title, marker);
+			self.showInfoWindow(title, this);
 		});
 		markers.push(marker);
 	};
@@ -168,11 +191,11 @@ function ViewModel(){
 		var $menu = $(".menu");
 		var $hide = $(".menu-tab");
 		if ($menu.hasClass("hide")) {
-			$menu.removeClass("hide").css("box-shadow", "3px 3px 10px 0px rgba(0,0,0,0.5)");
+			$menu.removeClass("hide");
 			$hide.css({ "top": "10px"
 								});
 		} else {
-			$menu.addClass("hide").css("box-shadow", "none");
+			$menu.addClass("hide");
 			$hide.css( { "top": "70px"
 								});
 		}
@@ -183,30 +206,23 @@ function ViewModel(){
 
 		finalURL = url + marker.id + auth;
 
-		// TODO: consider adding tipsURL functionality below
-		tipsURL = url + marker.id + '/tips?sort=recent&' + tipsAuth;
+		/* TODO: consider adding tipsURL functionality below
+		tipsURL = url + marker.id + '/tips?sort=recent&' + tipsAuth; */
 
 		infoWindow.close();
-		(function() {
-			for (i = 0; i < markers.length; i++) {
-				marker = markers[i];
-				marker.setAnimation(clear);
-			}
-		})
-		();
 
-		marker.setAnimation(google.maps.Animation.DROP);
+		// pans on marker on click
+		map.setZoom(16);
+		map.panTo(marker.getPosition());
 
-		// style the infowindow itself
-		infoWindow.setContent('<div id="info-window"><span class="window-title">' + title + '</span>' +
-								'<div><br><span class="window-address"></span></div>' +
-								'<div><br><span class="window-phone"></span></div>' +
-								'<div><br><img class="window-image"></div>' +
-								'<div><br><span class="window-tips"></span></div>' +  // TODO; not functional
-								'<div><br><span class="window-rating"></span></div>' +
-								'</div>'
-							);
-		infoWindow.open(map, marker);
+		// create animation upon click with timer to prevent perpetual motion
+		marker.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(function() {
+			marker.setAnimation(null); // set animation to null...
+		}, 1400);  						// ...after 1400 ms
+
+		// style the infowindow and set content
+
 		$.getJSON(finalURL)  // requests API info for everything besides tips
 		.done(function(data) {
 			rating = data.response.venue.rating;
@@ -253,9 +269,14 @@ function ViewModel(){
 			} else {
 				$infoRating.append("Be the first to review this venue!");
 			}
+		})
+
+		// error testing
+		.fail(function(data) {
+			console.log( "error" );
 		});
 
-		// TODO; not functional
+		/* TODO; not functional
 
 		$.getJSON(tipsURL)
 		.done(function(data) {
@@ -268,7 +289,19 @@ function ViewModel(){
 			} else {
 				$infoTips.append("Sorry, no tips available!");
 			}
-		});
+		}); */
+
+		infoWindow.setContent('<div><span class="window-title">' + title + '</span>' +
+								'<div><br><span class="window-address">' + formattedAddress + '</span></div>' +
+								'<div><br><span class="window-phone">' + formattedPhone + '</span></div>' +
+								'<div><br><img class="window-image">' + locationImage + '</div>' +
+								/* '<div><br><span class="window-tips"></span></div>' +  TODO; not functional */
+								'<div><br><span class="window-rating">' + rating + '</span></div>' +
+								'</div>'
+							);
+
+		// open the window
+		infoWindow.open(map, marker);
 	};
 }
 

@@ -4,47 +4,33 @@
 		<title>Udacity Neighborhood Map Project</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta title="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="style.css">
 		<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 	</head>
 	<body>
-		<script>
-		function initMap() {
-			map = new google.maps.Map(document.getElementById('map-view'), {
-				center: {lat: 40.760764, lng: -73.922769},
-				zoom: 16
-			});
-
-			infoWindow = new google.maps.InfoWindow({
-			    content: ''
-			});
-
-			viewModel.setMarkers();
-		}
-		</script>
 		<div class="container">
-			<div class="menu zoom">
-				<div class="menu-tab hvr-fade" data-bind="click: $root.hide">
-				</div>
-				<div class="menu-search">
+			<nav class="menu zoom">
+				<nav class="menu-tab hvr-fade" data-bind="click: $root.hide">
+				</nav>
+				<header class="menu-search">
 					<h2><em>kalós ílthate stin...</em></h2>
 						<br><h1>A  S  T  O  R  I  A</h1>
 					<form data-bind="submit: setFilter">
 						<input type="text" placeholder="What are you looking for? Type ALL for all..." data-bind="value: myFilter">
 					</form>
-				</div>
-				<div class="menu-list">
+				</header>
+				<nav class="menu-list">
 					<ul data-bind="foreach: filLocs">
 						<li data-bind="text: title, click: $root.menuClick" class="menu-location hvr-grow"></li>
 					</ul>
-				</div>
-			</div>
-			<div id="map-view"></div>
+				</nav>
+			</nav>
+			<main id="map-view"></main>
 		</div>
 		<script async defer src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="http://knockoutjs.com/downloads/knockout-3.4.2.js"></script>
 		<script src="js.js"></script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDglQSyQ0aScjK1m2y7A4lAar8Z1ACGwdU&callback=initMap"></script>
+		<script async defer onerror="mapError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDglQSyQ0aScjK1m2y7A4lAar8Z1ACGwdU&callback=initMap"></script>
 	</body>
 </html>
