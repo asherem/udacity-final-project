@@ -23,7 +23,7 @@ function initMap() {
 
 	'use strict'; // ensures correct, strict-style JavaScript code
 
-	map = new google.maps.Map(document.getElementById('map-view'), {
+	map = new google.maps.Map(document.getElementById('ma-view'), {
 		center: {lat: 40.760764, lng: -73.922769},
 		zoom: 16
 	});
@@ -35,9 +35,13 @@ function initMap() {
 	viewModel.setMarkers();
 }
 
-// error handling
+// error handling via Mozilla
 function mapError() {
-  document.write("Oops, there goes an error! Come back later.");
+	var newDiv = document.createElement("div");
+	var newContent = document.createTextNode("Oops, there goes an error! Come back later.");
+	newDiv.appendChild(newContent); // add the text node to the newly created div
+	var currentDiv = document.getElementById("map-view");  // add the newly created element and its content into the DOM
+	document.body.insertBefore(newDiv, currentDiv);
 }
 
 // set Location behavior
