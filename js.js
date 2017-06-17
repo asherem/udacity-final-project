@@ -23,7 +23,7 @@ function initMap() {
 
 	'use strict'; // ensures correct, strict-style JavaScript code
 
-	map = new google.maps.Map(document.getElementById('ma-view'), {
+	map = new google.maps.Map(document.getElementById('map-view'), {
 		center: {lat: 40.760764, lng: -73.922769},
 		zoom: 16
 	});
