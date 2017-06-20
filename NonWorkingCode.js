@@ -101,21 +101,22 @@ function ViewModel() {
 	]);
 
 	// inits the marker as concept
-	self.createMarker = function(title, position, id, icon) {
-		marker = new google.maps.Marker({
-			title: title,
-			position: position,
-			id: id,
-			map: map,
-			icon: icon,  // potential functionality for later
-			animation: google.maps.Animation.DROP  // sets marker animation
-		});
+	self.coordinates()[i].marker = self.createMarker(title, position, id, icon);
 
-		marker.addListener('click', function(){
-			self.showInfoWindow(title, this);
-		});
-		markers.push(marker);
-	};
+	marker = new google.maps.Marker({
+		title: title,
+		position: position,
+		id: id,
+		map: map,
+		marker: marker,
+		icon: icon,  // potential functionality for later
+		animation: google.maps.Animation.DROP  // sets marker animation
+	});
+
+	marker.addListener('click', function() {
+		self.showInfoWindow(title, this);
+	});
+	markers.push(marker);
 
 	// adds the markers as on-screen objects
 	self.setMarkers = function() {
