@@ -45,14 +45,13 @@ function mapError() {
 }
 
 // set Location behavior
-function Location(title, lat, lng, marker, filter, id, cat) {
+function Location(title, lat, lng, filter, id, cat) {
 
 	'use strict';
 
 	this.title = title;
 	this.lat = lat;
 	this.lng = lng;
-	this.marker = marker;
 	this.filter = filter;
 	this.id = id;
 	this.cat = cat; // category of location to potentially be used later */
@@ -70,7 +69,7 @@ function Location(title, lat, lng, marker, filter, id, cat) {
 	} */
 }
 
-function ViewModel(){
+function ViewModel() {
 
 	'use strict';
 
@@ -78,48 +77,47 @@ function ViewModel(){
 
 	self.coordinates = ko.observableArray(
 		[
-		new Location('Vitality And Health', 40.756828, -73.913812, marker, 'buffet organic supermarket deli food grocery all', '4b46b35ef964a520062726e3', "Other"),
-		new Location('Astoria Bier & Cheese', 40.760466, -73.922607, marker, 'beer cheese outdoor seating food all', '50676bc4e4b08e8fd3d07f72', "Restaurant"),
-		new Location('Oliver\'s Astoria', 40.759588, -73.919761, marker, 'breakfast lunch dinner food all', '51b11835498e02e0e1c93b76', "Restaurant"),
-		new Location('Sweet Afton', 40.765388, -73.919027, marker, 'beer wine bar pub gastropub food all', '4a9b0e2cf964a520373420e3', "Restaurant"),
-		new Location('Museum Of The Moving Image', 40.756314, -73.923933, marker, 'museum film movies cinema all', '424de080f964a520aa201fe3', "Other"),
-		new Location('Saffron', 40.7572223, -73.91571420000002, marker, 'dinner lunch indian curry food all', '50e5c5a2e4b035f761f9df9f', "Restaurant"),
-		new Location('United Artists Kaufman Astoria 14', 40.754356, -73.92409470000001, marker, 'film movies cinema all', '482af93cf964a520cd4f1fe3', "Other"),
-		new Location('Blink Fitness', 40.7626515, -73.9261085, marker, 'gym fitness all', '529688b811d2e101fca0bf89', "Other"),
-		new Location('New York Pao De Queijo', 40.7626515, -73.9261085, marker, 'brazilian lunch dinner spanish food all', '4b6dbc02f964a520c98a2ce3', "Restaurant"),
-		new Location('El Basurero', 40.7584236, -73.919106, marker, 'colombian spanish lunch dinner food all', '4abaae53f964a5206e8220e3', "Restaurant"),
-		new Location('Astoria Sports Complex', 40.7555046, -73.92290279999997, marker, 'gym fitness all', '4b68ad82f964a52092862be3', "Other"),
-		new Location('The Strand Smokehouse', 40.76321009999999, -73.9272823, marker, 'bbq american food steak all', '509c54afe4b047ee279e799b', "Restaurant"),
-		new Location('Villa Brazil Café Grill', 40.7551287, -73.91802530000001, marker, 'brazilian spanish lunch dinner food all', '4f77a524e4b0e0abc49ecef9', "Restaurant"),
-		new Location('Bai Sushi', 40.7597557, -73.92021869999996, marker, 'sushi lunch dinner asian japanese food all', '4b2062f2f964a520a53124e3', "Restaurant"),
-		new Location('Red Mango', 40.762579, -73.916416, marker, 'dessert frozen yogurt ice cream food all', '4bc21e2f2a89ef3b6241f388', "Restaurant"),
-		new Location('Bagels & Brew', 40.757903, -73.9162, marker, 'bagels breakfast lunch coffee food all', '4d121b1180f6721ed23115eb', "Restaurant"),
-		new Location('Omonia Cafe', 40.761112, -73.92402049999998, marker, 'greek dessert coffee dinner food all', '4ad17c3cf964a5208bde20e3', "Restaurant"),
-		new Location('Greenbay Market', 40.761306, -73.92443249999997, marker, 'gourmet organic supermarket grocery deli food all', '4f887eb7e4b0ab5c870ffc44', "Other"),
-		new Location('Bareburger', 40.7634438, -73.9210736, marker, 'burger organic american food all', '4a3c2b49f964a52036a11fe3', "Restaurant"),
-		new Location('Zenon Taverna', 40.7628144, -73.9208577, marker, 'greek dinner wine food all', '4a6b89d8f964a52009cf1fe3', "Restaurant")
+		new Location('Vitality And Health', 40.756828, -73.913812, 'buffet organic supermarket deli food grocery all', '4b46b35ef964a520062726e3', "Other"),
+		new Location('Astoria Bier & Cheese', 40.760466, -73.922607, 'beer cheese outdoor seating food all', '50676bc4e4b08e8fd3d07f72', "Restaurant"),
+		new Location('Oliver\'s Astoria', 40.759588, -73.919761, 'breakfast lunch dinner food all', '51b11835498e02e0e1c93b76', "Restaurant"),
+		new Location('Sweet Afton', 40.765388, -73.919027, 'beer wine bar pub gastropub food all', '4a9b0e2cf964a520373420e3', "Restaurant"),
+		new Location('Museum Of The Moving Image', 40.756314, -73.923933, 'museum film movies cinema all', '424de080f964a520aa201fe3', "Other"),
+		new Location('Saffron', 40.7572223, -73.91571420000002, 'dinner lunch indian curry food all', '50e5c5a2e4b035f761f9df9f', "Restaurant"),
+		new Location('United Artists Kaufman Astoria 14', 40.754356, -73.92409470000001, 'film movies cinema all', '482af93cf964a520cd4f1fe3', "Other"),
+		new Location('The Bonnie', 40.7746737, -73.91360029999998, 'bar lunch dinner food pub gastropub all', '544ed5d6498e79ed1c48737a', "Restaurant"),
+		new Location('New York Pao De Queijo', 40.7626515, -73.9261085, 'brazilian lunch dinner spanish food all', '4b6dbc02f964a520c98a2ce3', "Restaurant"),
+		new Location('El Basurero', 40.7584236, -73.919106, 'colombian spanish lunch dinner food all', '4abaae53f964a5206e8220e3', "Restaurant"),
+		new Location('Il Bambino', 40.7628596, -73.92089090000002, 'italian lunch dinner food all', '458d06b3f964a520fe3f1fe3', "Restaurant"),
+		new Location('The Strand Smokehouse', 40.76321009999999, -73.9272823, 'bbq american food steak all', '509c54afe4b047ee279e799b', "Restaurant"),
+		new Location('Villa Brazil Café Grill', 40.7551287, -73.91802530000001, 'brazilian spanish lunch dinner food all', '4f77a524e4b0e0abc49ecef9', "Restaurant"),
+		new Location('Bai Sushi', 40.7597557, -73.92021869999996, 'sushi lunch dinner asian japanese food all', '4b2062f2f964a520a53124e3', "Restaurant"),
+		new Location('Red Mango', 40.762579, -73.916416, 'dessert frozen yogurt ice cream food all', '4bc21e2f2a89ef3b6241f388', "Restaurant"),
+		new Location('Bagels & Brew', 40.757903, -73.9162, 'bagels breakfast lunch coffee food all', '4d121b1180f6721ed23115eb', "Restaurant"),
+		new Location('Omonia Cafe', 40.761112, -73.92402049999998, 'greek dessert coffee dinner food all', '4ad17c3cf964a5208bde20e3', "Restaurant"),
+		new Location('Greenbay Market', 40.761306, -73.92443249999997, 'gourmet organic supermarket grocery deli food all', '4f887eb7e4b0ab5c870ffc44', "Other"),
+		new Location('Bareburger', 40.7634438, -73.9210736, 'burger organic american food all', '4a3c2b49f964a52036a11fe3', "Restaurant"),
+		new Location('Zenon Taverna', 40.7628144, -73.92, 'greek dinner wine food all', '4a6b89d8f964a52009cf1fe3', "Restaurant")
 
 	]);
 
 	// inits the marker as concept
 	self.createMarker = function(title, position, id, icon) {
-		marker = new google.maps.Marker({
-			title: title,
-			position: position,
-			id: id,
-			map: map,
-			icon: icon,  // potential functionality for later
-			animation: google.maps.Animation.DROP  // sets marker animation
-		});
+			marker = new google.maps.Marker({
+				title: title,
+				position: position,
+				id: id,
+				map: map,
+				icon: icon,  // potential functionality for later
+				animation: google.maps.Animation.DROP  // sets marker animation
+			});
 
-		marker.addListener('click', function(){
-			self.showInfoWindow(title, this);
-		});
-		markers.push(marker);
-	};
+			marker.addListener('click', function(){
+				self.showInfoWindow(title, this);
+			});
+			markers.push(marker);
+		};
 
 	// adds the markers as on-screen objects
-	// title, position, id, icon critical for 'cat' functionality
 	self.setMarkers = function() {
 		coordinates = self.filLocs();
 		for (i = 0; i < coordinates.length; i++) {
@@ -128,12 +126,13 @@ function ViewModel(){
 			id = coordinates[i].id;
 			position.lat = coordinates[i].lat;
 			position.lng = coordinates[i].lng;
-			marker = coordinates[i].marker;
 			self.createMarker(title, position, id, icon);
 		}
 	};
 
-	self.setMapMarkers = function(map) {
+	// show/clear markers via Google's official documentation
+
+	self.setMapOnAll = function(map) {
 		for (i = 0; i < markers.length; i++) {
 			markers[i].setMap(map);
 		}
@@ -144,17 +143,12 @@ function ViewModel(){
 	};
 
 	self.clearMarkers = function() {
-		self.setMapMarkers(clear);
-	};
-
-	self.deleteMarkers = function() {
-		self.clearMarkers();
-		markers = []; // leverage caching
+		self.setMapOnAll(clear);
 	};
 
 	// filter system
 	self.setFilter = function() {
-		self.deleteMarkers();
+		self.clearMarkers();
 		self.setMarkers();
 	};
 
@@ -164,13 +158,13 @@ function ViewModel(){
 
 		if (!self.myFilter()) {
 			return self.coordinates();
-			coordinates.marker.setVisible(false);
+			// coordinates.marker.setVisible(false);
 		} else {
 			return ko.utils.arrayFilter(self.coordinates(), function(mov) {
 				filter = self.myFilter().toLowerCase();
 				coordinatestr = mov.filter;
 				locStr = coordinatestr.indexOf(filter);
-				coordinates.marker.setVisible(true);
+				// coordinates.marker.setVisible(true);
 				if (locStr == -1) {
 					return false;
 				} else {
