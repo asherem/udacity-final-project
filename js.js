@@ -4,19 +4,17 @@
 
 // set all variables in global scope to give code overview
 // jQuery vars defined in functions
-var map, icon, infoWindow, setUL;
-var finalURL, marker, markertitle;
-var coordinates, viewModel, title;
+
+var map, icon, title, marker;
+var infoWindow, setUL, markertitle;
+var finalURL, coordinates, viewModel, title;
 var position, id, i, filter, coordinatestr, locStr;
-// excised: var rating, formattedAddress, locationImage, formattedPhone;
-// TODO var formattedTips;
-// TODO var tipsURL;
+var formattedAddress, formattedPhone, rating;
+var prefix, width, suffix, locationImage;
 var google, ko;
 var url = 'https://api.foursquare.com/v2/venues/';
 var auth = '?client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
-// TODO var tipsAuth = 'client_id=E2MIMPTNKJYWAZJTC51JXKKRUN0X1HWLBAFNVSMANV330CH0&client_secret=LWMLJLLPGBNPLBTV3W42M3UCJRR0B5BQPRBUK2OTL0DCWXK5&v=20160621';
 var markers = [];
-var clear = null;
 
 // set map
 function initMap() {
@@ -55,18 +53,6 @@ function Location(title, lat, lng, filter, id, cat) {
 	this.filter = filter;
 	this.id = id;
 	this.cat = cat; // category of location to potentially be used later */
-
-	/* the following SWITCH is a TODO with 'this.cat' that has not been implemented:
-	switch (this.cat) {
-
-		case "Restaurant":
-		this.icon = 'http://www.googlemapsmarkers.com/v1/G/0099FF/FFFFFF/FF0000/';
-		break;
-
-		case "Other":
-		this.icon = 'http://www.googlemapsmarkers.com/v1/O/0099FF/FFFFFF/FF0000/';
-		break;
-	} */
 }
 
 function ViewModel() {
@@ -115,6 +101,8 @@ function ViewModel() {
 			self.showInfoWindow(title, this);
 		});
 		markers.push(marker);
+
+		return marker;
 	};
 
 	// adds the markers as on-screen objects
@@ -126,30 +114,14 @@ function ViewModel() {
 			id = coordinates[i].id;
 			position.lat = coordinates[i].lat;
 			position.lng = coordinates[i].lng;
-			self.createMarker(title, position, id, icon);
+			// self.createMarker(title, position, id, icon);
+			self.coordinates()[i].marker = self.createMarker(title, position, id, icon);
 		}
-	};
-
-	// show/clear markers via Google's official documentation
-
-	self.setMapOnAll = function(map) {
-		for (i = 0; i < markers.length; i++) {
-			markers[i].setMap(map);
-		}
-	};
-
-	self.showMarkers = function() {
-		self.setMapMarkers(map);
-	};
-
-	self.clearMarkers = function() {
-		self.setMapOnAll(clear);
 	};
 
 	// filter system
 	self.setFilter = function() {
-		self.clearMarkers();
-		self.setMarkers();
+		// ...
 	};
 
 	// init filter system with bindings
@@ -157,17 +129,22 @@ function ViewModel() {
 	self.filLocs = ko.computed(function() {
 
 		if (!self.myFilter()) {
+			self.coordinates().forEach(function(mov) {
+				if (mov.marker) {
+					mov.marker.setVisible(true);
+				}
+			});
 			return self.coordinates();
-			// coordinates.marker.setVisible(false);
 		} else {
 			return ko.utils.arrayFilter(self.coordinates(), function(mov) {
 				filter = self.myFilter().toLowerCase();
 				coordinatestr = mov.filter;
 				locStr = coordinatestr.indexOf(filter);
-				// coordinates.marker.setVisible(true);
 				if (locStr == -1) {
+					mov.marker.setVisible(false); // clears markers without deleting them
 					return false;
 				} else {
+					mov.marker.setVisible(true); // sets markers without re-creating them
 					return true;
 				}
 			});
@@ -185,7 +162,6 @@ function ViewModel() {
 
 			}
 		}
-
 	};
 
 	// set menu tab's hiding behavior
@@ -227,17 +203,13 @@ function ViewModel() {
 
 		$.getJSON(finalURL)  // requests API info for everything besides tips
 		.done(function(data) {
-			var rating = data.response.venue.rating;
-			var formattedAddress = data.response.venue.location.address;
-			var prefix = data.response.venue.bestPhoto.prefix;
-			var width = data.response.venue.bestPhoto.width;
-			var suffix = data.response.venue.bestPhoto.suffix;
-			var locationImage = prefix + width + suffix;
-			var formattedPhone = data.response.venue.contact.formattedPhone;
-			/*var $infoImg = $(".window-image");
-			var $infoRating = $(".window-rating");
-			var $infoAddress = $(".window-address");
-			var $infoPhone = $(".window-phone");*/
+			rating = data.response.venue.rating;
+			formattedAddress = data.response.venue.location.address;
+			prefix = data.response.venue.bestPhoto.prefix;
+			width = data.response.venue.bestPhoto.width;
+			suffix = data.response.venue.bestPhoto.suffix;
+			locationImage = prefix + width + suffix;
+			formattedPhone = data.response.venue.contact.formattedPhone;
 
 			infoWindow.setContent('<div><span class="window-title">' + title + '</span>' +
 									'<div><br><span class="window-address">' + formattedAddress + '</span></div>' +
@@ -249,44 +221,6 @@ function ViewModel() {
 									'</div>'
 								);
 
-			/* set API data into infoWindow with light error handling
-			if (formattedAddress.length > 0) {
-				$infoAddress.append(data.response.venue.location.formattedAddress[0] + "<br>Astoria, NY");
-			} else {
-				$infoAddress.append("Sorry, no address!");
-			}
-
-			if (formattedPhone.length > 0) {
-				$infoPhone.append(data.response.venue.contact.formattedPhone);
-			} else {
-				$infoPhone.append("Sorry, no phone number available!");
-			}
-
-			if (locationImage) {
-				$infoImg.attr("src", locationImage.prefix + "75x75" + locationImage.suffix);
-			} else {
-				$infoImg.append("src=#");
-			}
-
-			// color the ratings red, yellow, and green according to numerical qualifiers
-			if (rating <= 6) {
-				rating = "The people say: " + '<span class="red"><strong>' + rating + "/10" + '</strong></span>';
-				$infoRating.append(rating);
-
-			} else if (rating <= 7.5) {
-				rating = "The people say: " + '<span class="yellow"><strong>' + rating + "/10" + '</strong></span>';
-				$infoRating.append(rating);
-
-			} else if (rating >= 7.6) {
-				rating = "The people say: " + '<span class="green"><strong>' + rating + "/10" + '</strong></span>';
-				$infoRating.append(rating);
-
-			} else {
-				$infoRating.append("Be the first to review this venue!");
-			}
-
-			*/
-
 			// open the window
 			infoWindow.open(map, marker);
 
@@ -296,22 +230,6 @@ function ViewModel() {
 		.fail(function(data) {
 			console.log( "error" );
 		});
-
-		/* TODO; not functional
-
-		$.getJSON(tipsURL)
-		.done(function(data) {
-			formattedTips = data.response.tips.items.text;
-			var $infoTips = $(".window-tips");
-
-			if (formattedTips.length > 0) {
-				$infoTips.append(data.response.tips.items.text[0]);
-
-			} else {
-				$infoTips.append("Sorry, no tips available!");
-			}
-		}); */
-
 	};
 }
 
