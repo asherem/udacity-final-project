@@ -75,7 +75,9 @@ input {
 	transition-property: color, background-color;
 }
 
-.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+.hvr-fade:hover,
+.hvr-fade:focus,
+.hvr-fade:active {
 	background-color: #2098D1;
 	color: white;
 }
@@ -189,14 +191,8 @@ input {
 	height: 80px;
 }
 
-.red {
+.ajax-error {
 	color: firebrick;
-}
-
-.yellow {
-	color: goldenrod;
-}
-
-.green {
-	color: forestgreen;
+	font-style: italic;
+	font-weight: bold;
 }

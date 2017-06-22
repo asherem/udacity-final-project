@@ -184,9 +184,6 @@ function ViewModel() {
 
 		finalURL = url + marker.id + auth;
 
-		/* TODO: consider adding tipsURL functionality below
-		tipsURL = url + marker.id + '/tips?sort=recent&' + tipsAuth; */
-
 		infoWindow.close();
 
 		// pans on marker on click
@@ -216,7 +213,6 @@ function ViewModel() {
 									'<div><br><span class="window-address">' + 'Astoria, NY' + '</span></div>' +
 									'<div><br><span class="window-phone">' + formattedPhone + '</span></div>' +
 									'<div><br><img class="window-image" src=' + locationImage + '></img></div>' +
-									/* '<div><br><span class="window-tips"></span></div>' +  TODO; not functional */
 									'<div><br><span class="window-rating"> The people say: <strong>' + rating + '/10</strong></span></div>' +
 									'</div>'
 								);
@@ -228,7 +224,9 @@ function ViewModel() {
 
 		// error testing
 		.fail(function(data) {
-			console.log( "error" );
+			infoWindow.setContent('<div><span class="ajax-error"> Oops! Something went wrong. We\'re working on it.</span></div>')
+			infoWindow.open(map, marker);
+
 		});
 	};
 }

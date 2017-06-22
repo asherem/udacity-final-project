@@ -17,7 +17,7 @@
 					<h2><em>kalós ílthate stin...</em></h2>
 						<br><h1>A  S  T  O  R  I  A</h1>
 					<form data-bind="submit: setFilter">
-						<input type="text" placeholder="What are you looking for? Type ALL for all..." data-bind="value: myFilter">
+						<input type="text" placeholder="What are you looking for? Type ALL for all..." data-bind="value: myFilter, valueUpdate: 'keyup'">
 					</form>
 				</header>
 				<nav class="menu-list">
@@ -28,7 +28,7 @@
 			</nav>
 			<main id="map-view"></main>
 		</div>
-		<script async defer src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script defer src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 		<script src="http://knockoutjs.com/downloads/knockout-3.4.2.js"></script>
 		<script src="js.js"></script>
 		<script async defer onerror="mapError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDglQSyQ0aScjK1m2y7A4lAar8Z1ACGwdU&callback=initMap"></script>
