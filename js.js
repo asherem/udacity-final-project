@@ -224,7 +224,7 @@ function ViewModel() {
 
 		// error testing
 		.fail(function(data) {
-			infoWindow.setContent('<div><span class="ajax-error"> Oops! Something went wrong. We\'re working on it.</span></div>')
+			infoWindow.setContent('<div><span class="ajax-error"> Oops! FourSquare could not be reached. We\'re working on it.</span></div>');
 			infoWindow.open(map, marker);
 
 		});
